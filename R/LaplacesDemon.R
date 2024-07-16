@@ -6133,7 +6133,7 @@ LaplacesDemon <- function(Model, Data, Initial.Values, Covar=NULL,
                     ### Accept/Reject
                     log.u <- log(runif(1))
                     log.alpha <- Mo1[["LP"]] - Mo0[["LP"]]
-                    if(!is.finite(log.alpha)) log.alpha <- 0
+                    if(!is.finite(log.alpha)) log.alpha <- -Inf
                     if(log.u < log.alpha) {
                          Mo0 <- Mo1
                          Acceptance <- Acceptance + 1}}
@@ -6241,7 +6241,7 @@ LaplacesDemon <- function(Model, Data, Initial.Values, Covar=NULL,
                          ### Accept/Reject
                          log.u <- log(runif(1))
                          log.alpha <- Mo1[["LP"]] - Mo0[["LP"]]
-                         if(!is.finite(log.alpha)) log.alpha <- 0
+                         if(!is.finite(log.alpha)) log.alpha <- -Inf
                          if(log.u < log.alpha) {
                               Mo0 <- Mo1
                               Acceptance <- Acceptance +
@@ -6809,7 +6809,8 @@ LaplacesDemon <- function(Model, Data, Initial.Values, Covar=NULL,
                          if(log.u < log.alpha) {
                               Mo0 <- Mo1
                               Acceptance <- Acceptance +
-                                   length(Block[[b]]) / LIV}}
+                                   length(Block[[b]]) / LIV}
+                         }
                     }
                ### Save Thinned Samples
                if(iter %% Thinning == 0) {

@@ -14,7 +14,12 @@ LML <- function(Model=NULL, Data=NULL, Modes=NULL, theta=NULL, LL=NULL,
      if(!is.null(Modes) & !is.null(theta) & !is.null(LL) &
           !is.null(Covar) & method == "GD") {
           log.g.theta <- dmvn(theta, Modes, Covar, log=TRUE)
-          LML <- log(1 / mean(exp(log.g.theta - LL)))
+          #LML <- log(1 / mean(exp(log.g.theta - LL)))
+          N <- length(log.g.theta)
+          x <- log.g.theta - LL
+          x.max <- x[which.max(x)]
+          x.rescale <- x - x.max
+          LML <- log(1) - ((log(1) - log(N)) + (x.max + sum(exp(x.rescale))))
           ### Output
           LML.out <- list(LML=LML, VarCov=NA)
           }
